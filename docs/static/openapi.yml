@@ -4,22 +4,18 @@ info:
   name: ''
   description: ''
 paths:
-  /james/blog/blog/params:
-    get:
-      summary: Parameters queries the parameters of the module.
-      operationId: BlogBlogQuery_Params
+  /blog.blog.Msg/CreatePost:
+    post:
+      operationId: BlogBlogMsg_CreatePost
       responses:
         '200':
           description: A successful response.
           schema:
             type: object
             properties:
-              params:
-                description: params holds all the parameters of this module.
-                type: object
-            description: >-
-              QueryParamsResponse is response type for the Query/Params RPC
-              method.
+              id:
+                type: string
+                format: uint64
         default:
           description: An unexpected error response.
           schema:
@@ -38,8 +34,21 @@ paths:
                     '@type':
                       type: string
                   additionalProperties: {}
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              creator:
+                type: string
+              title:
+                type: string
+              body:
+                type: string
       tags:
-        - Query
+        - Msg
   /blog.blog.Msg/UpdateParams:
     post:
       summary: |-
@@ -88,10 +97,7 @@ paths:
                   authority is the address that controls the module (defaults to
                   x/gov unless overwritten).
               params:
-                description: |-
-                  params defines the module parameters to update.
-
-                  NOTE: All parameters must be supplied.
+                description: 'NOTE: All parameters must be supplied.'
                 type: object
             description: MsgUpdateParams is the Msg/UpdateParams request type.
       tags:
@@ -18595,6 +18601,41 @@ paths:
       tags:
         - Msg
 definitions:
+  blog.blog.MsgCreatePost:
+    type: object
+    properties:
+      creator:
+        type: string
+      title:
+        type: string
+      body:
+        type: string
+  blog.blog.MsgCreatePostResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  blog.blog.MsgUpdateParams:
+    type: object
+    properties:
+      authority:
+        type: string
+        description: >-
+          authority is the address that controls the module (defaults to x/gov
+          unless overwritten).
+      params:
+        description: 'NOTE: All parameters must be supplied.'
+        type: object
+    description: MsgUpdateParams is the Msg/UpdateParams request type.
+  blog.blog.MsgUpdateParamsResponse:
+    type: object
+    description: |-
+      MsgUpdateParamsResponse defines the response structure for executing a
+      MsgUpdateParams message.
+  blog.blog.Params:
+    type: object
+    description: Params defines the parameters for the module.
   google.protobuf.Any:
     type: object
     properties:
@@ -18930,36 +18971,6 @@ definitions:
                   "@type": "type.googleapis.com/google.protobuf.Duration",
                   "value": "1.212s"
                 }
-  blog.blog.Params:
-    type: object
-    description: Params defines the parameters for the module.
-  blog.blog.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params holds all the parameters of this module.
-        type: object
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
-  blog.blog.MsgUpdateParams:
-    type: object
-    properties:
-      authority:
-        type: string
-        description: >-
-          authority is the address that controls the module (defaults to x/gov
-          unless overwritten).
-      params:
-        description: |-
-          params defines the module parameters to update.
-
-          NOTE: All parameters must be supplied.
-        type: object
-    description: MsgUpdateParams is the Msg/UpdateParams request type.
-  blog.blog.MsgUpdateParamsResponse:
-    type: object
-    description: |-
-      MsgUpdateParamsResponse defines the response structure for executing a
-      MsgUpdateParams message.
   cosmos.auth.v1beta1.MsgUpdateParams:
     type: object
     properties:
