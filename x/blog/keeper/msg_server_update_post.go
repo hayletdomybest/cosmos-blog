@@ -9,9 +9,10 @@ import (
 
 func (k msgServer) UpdatePost(goCtx context.Context, msg *types.MsgUpdatePost) (*types.MsgUpdatePostResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	// TODO: Handling the message
-	_ = ctx
+	err := k.Keeper.UpdatePost(ctx, msg)
+	if err != nil {
+		return nil, err
+	}
 
 	return &types.MsgUpdatePostResponse{}, nil
 }

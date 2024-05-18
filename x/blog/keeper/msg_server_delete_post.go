@@ -10,8 +10,9 @@ import (
 func (k msgServer) DeletePost(goCtx context.Context, msg *types.MsgDeletePost) (*types.MsgDeletePostResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+	if err := k.Keeper.DeletePost(ctx, msg); err != nil {
+		return nil, err
+	}
 
 	return &types.MsgDeletePostResponse{}, nil
 }

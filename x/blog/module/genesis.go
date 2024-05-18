@@ -11,6 +11,14 @@ import (
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
+
+	k.SetPostCount(ctx, 0)
+
+	k.AppendPost(ctx, &types.Post{
+		Title:   "First Post",
+		Body:    "Hello World",
+		Creator: "James",
+	})
 }
 
 // ExportGenesis returns the module's exported genesis.
